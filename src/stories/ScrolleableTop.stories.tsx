@@ -54,8 +54,7 @@ export const ScrolleableTop = () => {
         </div>
     );
 };
-
 export default {
-    title: 'Example/reactObserverInfiniteScroll/ScrolleableTop',
+    title: 'Example/reactObserverInfiniteScroll',
     component: ScrolleableTop,
 };
