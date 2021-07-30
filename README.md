@@ -1,46 +1,134 @@
-# Getting Started with Create React App
+# react-observer-infinite-scroll
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+一个基于 `IntersectionObserver` 的无限滚动 `react-hook` 组件，支持正向滚动、逆向滚动（类似微信聊天回滚加载历史数据）、滑到底部
 
-## Available Scripts
+# install
 
-In the project directory, you can run:
+```bash
+npm install --save react-observer-scroll-component
 
-### `yarn start`
+// in code ES6
+import InfiniteScroll from 'react-observer-scroll-component';
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# demos
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## ScrolleableTop
 
-### `yarn test`
+```jsx
+import { useCreation } from 'ahooks';
+import React, { RefObject } from 'react';
+import { useState } from 'react';
+import InfiniteScroll, { InfiniteScrollOutRef } from '../index';
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+const ScrolleableTop = () => {
+  const targetRef = useCreation<RefObject<InfiniteScrollOutRef>>(() => ({ current: null }), []);
+  const targetWrapRef = useCreation<RefObject<HTMLDivElement>>(() => ({ current: null }), []);
+  const [list, setList] = useState(Array.from({ length: 20 }));
 
-### `yarn build`
+  const next = () => {
+    setTimeout(() => {
+      setList(pre => pre.concat(Array.from({ length: 20 })));
+    }, 2000);
+  };
+  const toBottom=()=>{
+     targetRef?.current?.scrollToBottom && targetRef?.current?.scrollToBottom()
+  }
+  return (
+    <div
+      ref={targetWrapRef}
+      style={{
+        height: 300,
+        overflow: 'auto',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column-reverse',
+      }}>
+      <button onClick={toBottom}  style={{
+        width: 100,
+        height: 30,
+        right: 30,
+        top: 30,
+        zIndex: 500,
+        position: 'fixed',
+      }}>TO BOTTOM</button>
+      <InfiniteScroll
+        intersectionOption={{ root: targetWrapRef.current }}
+        dataLength={list.length}
+        inverse
+        next={next}
+        hasMore={true}
+        ref={targetRef}
+        loader={<h4>Loading...</h4>}>
+        {list.map((_, i) => (
+          <div key={i} style={{ height: 30, margin: 4, border: '1px solid hotpink' }}>
+            #{i + 1} row
+          </div>
+        ))}
+      </InfiniteScroll>
+    </div>
+  );
+};
+export default ScrolleableTop;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## WindowInfiniteScrollComponent
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+``` jsx
+import React from 'react';
+import InfiniteScroll from '../index';
+type State = {
+  data: any[];
+};
+export default class WindowInfiniteScrollComponent extends React.Component<
+  {},
+  State
+> {
+  state = {
+    data: Array.from({ length: 20 }),
+  };
 
-### `yarn eject`
+  next = () => {
+    setTimeout(() => {
+      this.setState({ data: this.state.data.concat(Array.from({ length: 20 })) });
+    }, 2000);
+  };
+  render() {
+    return (
+      <>
+        <InfiniteScroll
+          hasMore={true}
+          next={this.next}
+          loader={<h1>Loading...</h1>}
+          dataLength={this.state.data.length}
+        >
+          {this.state.data.map((_, i) => (
+            <div
+              key={i}
+              style={{ height: 30, margin: 4, border: '1px solid hotpink' }}
+            >
+              #{i + 1} row
+            </div>
+          ))}
+        </InfiniteScroll>
+      </>
+    );
+  }
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# props
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+name | type | description
+-----|------|------------
+**next** | function | 触发滚动的回调函数
+**hasMore** | boolean | 是否可以加载更多
+**children** | node (list) | 滚动列表子级元素
+**loader** | node | 加载动画元素
+**style** | object | 容器样式表
+**intersectionOption** | object | IntersectionObserver 参数
+**inverse** | boolean | 是否倒序
+**immediate** | boolean | 是否初始化就执行 next 回调
+**dataLength** | number | 滚动列表核心数据的数值

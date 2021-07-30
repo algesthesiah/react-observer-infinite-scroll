@@ -1,4 +1,4 @@
-import React, { useRef, useState,useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import InfiniteScroll, { InfiniteScrollOutRef } from '../index';
 
 export const ScrolleableTop = () => {
@@ -10,11 +10,11 @@ export const ScrolleableTop = () => {
         setTimeout(() => {
             setList(pre => pre.concat(Array.from({ length: 20 })));
         }, 2000);
-    },[]);
+    }, []);
 
     const toBottom = useCallback(() => {
         targetRef?.current?.scrollToBottom && targetRef?.current?.scrollToBottom();
-    },[targetRef]);
+    }, [targetRef]);
     return (
         <div
             ref={targetWrapRef}
@@ -56,6 +56,6 @@ export const ScrolleableTop = () => {
 };
 
 export default {
-    title: 'Example/reactObserverInfiniteScroll',
+    title: 'Example/reactObserverInfiniteScroll/ScrolleableTop',
     component: ScrolleableTop,
 };
