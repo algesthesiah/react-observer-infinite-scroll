@@ -23,6 +23,6 @@ export const WindowInfiniteScrollComponent = () => {
 };
 
 export default {
-    title: 'Example/reactObserverInfiniteScroll',
-    component: WindowInfiniteScrollComponent,
+  title: 'Example/WindowInfiniteScrollComponent',
+  component: WindowInfiniteScrollComponent,
 };
