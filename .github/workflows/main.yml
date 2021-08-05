@@ -27,16 +27,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           persist-credentials: false
-          ref: ${{ github.head_ref }}
-          token: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Setup
-        uses: fregante/setup-git-user@v1
       # 安装依赖、打包
       - name: Install and Build
         run: |
           git config --global user.email "541877028@qq.com"
           git config --global user.name "Joey Leo"
-          git remote set-url origin https://541877028@qq.com:${{ secrets.MY_PASSWORD }}@github.com/algesthesiah/react-observer-infinite-scroll.git
+          git remote set-url origin https://${secrets.GITHUB_TOKEN}@github.com/algesthesiah/react-observer-infinite-scroll.git
           yarn install
           yarn build:web
       - name: Setup GitHub
