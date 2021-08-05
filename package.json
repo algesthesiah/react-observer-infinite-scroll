@@ -20,6 +20,16 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "keywords": [
+    "react",
+    "infinite-scroll",
+    "infinite",
+    "scroll",
+    "component",
+    "IntersectionObserver",
+    "react-component"
+  ],
+  "author": "algesthesiah <541877028@qq.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
