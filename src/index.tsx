@@ -6,30 +6,32 @@ import React, {
   useRef,
   useMemo,
   useState,
+  ForwardRefExoticComponent,
   memo,
-} from 'react'
+} from 'react';
 import { useIntersection, useUpdateEffect } from 'react-use'
 import { useDebounceFn, usePersistFn, usePrevious } from 'ahooks'
 import './index.css'
-
-type Fn = () => any
-export interface InfiniteScrollOutRef {
-  scrollToBottom?: null | (() => void)
-}
-export interface InfiniteScrollProps {
-  ref?: React.Ref<InfiniteScrollOutRef>
-  next: Fn
-  style?: CSSProperties
-  hasMore: boolean
-  children: ReactNode
-  loader: ReactNode
-  inverse?: boolean
-  dataLength: number
-  immediate?: boolean
-  intersectionOption?: IntersectionObserverInit
-}
 const defaultIntersectionOption = { root: null, rootMargin: '0px', threshold: 1 }
-const InfiniteScroll: React.ForwardRefExoticComponent<InfiniteScrollProps> = memo(
+
+export interface InfiniteScrollOutRef {
+  scrollToBottom?: null | (() => void);
+}
+type Fn = () => any;
+
+export interface InfiniteScrollProps {
+  ref?: React.Ref<InfiniteScrollOutRef>;
+  next: Fn;
+  style?: CSSProperties;
+  hasMore: boolean;
+  children: ReactNode;
+  loader: ReactNode;
+  inverse?: boolean;
+  dataLength: number;
+  immediate?: boolean;
+  intersectionOption?: IntersectionObserverInit;
+}
+const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
   forwardRef(({ children, next, style, hasMore, loader, dataLength, immediate, inverse, intersectionOption }, ref) => {
     const _intersectionOption = {
       ...defaultIntersectionOption,

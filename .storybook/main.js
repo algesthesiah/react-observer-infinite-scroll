@@ -5,13 +5,33 @@ module.exports = {
       name: '@storybook/addon-docs',
       options: {
         configureJSX: true,
-        babelOptions: {},
         sourceLoaderOptions: null,
+        babelOptions: {},
         transcludeMarkdown: true,
       },
     },
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
     '@storybook/preset-create-react-app',
+    '@storybook/addon-essentials',
+    // {
+    //   name: '@storybook/preset-scss',
+    //   options: {
+    //     cssLoaderOptions: {
+    //       modules: { localIdentName: '[name]__[local]--[hash:base64:5]' },
+    //     },
+    //   },
+    // },
+    '@storybook/addon-links',
   ],
+  webpackFinal: config => {
+    console.log(config.module.rules);
+    return {
+      ...config,
+      plugins: config.plugins.filter(plugin => {
+        if (plugin.constructor.name === 'ESLintWebpackPlugin') {
+          return false;
+        }
+        return true;
+      }),
+    };
+  },
 };
