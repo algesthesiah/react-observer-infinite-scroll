@@ -23,7 +23,6 @@ module.exports = {
     '@storybook/addon-links',
   ],
   webpackFinal: config => {
-    console.log(config.module.rules);
     return {
       ...config,
       plugins: config.plugins.filter(plugin => {
