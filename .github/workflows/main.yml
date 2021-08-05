@@ -24,9 +24,12 @@ jobs:
     steps:
       # 拉取代码
       - name: Checkout
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
+          token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Setup
+        uses: fregante/setup-git-user@v1
       # 安装依赖、打包
       - name: Install and Build
         run: |
