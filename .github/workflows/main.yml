@@ -34,6 +34,9 @@ jobs:
       # 安装依赖、打包
       - name: Install and Build
         run: |
+          git config --global user.email "541877028@qq.com"
+          git config --global user.name "Joey Leo"
+          git remote set-url origin https://algesthesiah:${{ secrets.MY_PASSWORD }}@github.com/algesthesiah/react-observer-infinite-scroll.git
           yarn install
           yarn build:web
       - name: Setup GitHub
