@@ -36,7 +36,7 @@ jobs:
       - name: Setup GitHub
         run: |
             git config --global user.email "541877028@qq.com"
-            git config --global user.name "algesthesiah"
+            git config --global user.name "liulu"
             git remote rm origin
             git remote add origin https://${GITHUB_TOKEN}@github.com/algesthesiah/react-observer-infinite-scroll
             yarn storybook:upload
