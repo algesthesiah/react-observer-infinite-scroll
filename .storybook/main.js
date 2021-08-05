@@ -21,15 +21,15 @@ module.exports = {
     // },
     '@storybook/addon-links',
   ],
-  webpackFinal: config => {
-    return {
-      ...config,
-      plugins: config.plugins.filter(plugin => {
-        if (plugin.constructor.name === 'ESLintWebpackPlugin') {
-          return false;
-        }
-        return true;
-      }),
-    };
+  webpackFinal: webpackConfig => {
+    const scopePluginIndex = webpackConfig.resolve.plugins.findIndex(
+      ({ constructor }) => constructor && constructor.name === 'ModuleScopePlugin'
+    );
+    const eslintPluginIndex = webpackConfig.resolve.plugins.findIndex(
+      ({ constructor }) => constructor && constructor.name === 'ESLintWebpackPlugin'
+    );
+    webpackConfig.resolve.plugins.splice(scopePluginIndex, 1);
+    webpackConfig.resolve.plugins.splice(eslintPluginIndex, 1);
+    return webpackConfig;
   },
 };
