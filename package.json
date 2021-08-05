@@ -6,8 +6,7 @@
     "start": "yarn storybook",
     "build": "rimraf es && rimraf lib && rollup -c",
     "storybook": "start-storybook -p 6006",
-    "build:web": "build-storybook",
-    "storybook:upload": "gh-pages -d storybook-static --git \"$(which git)\""
+    "build:web": "build-storybook"
   },
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -63,7 +62,6 @@
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.3.4",
     "css-loader": "^6.2.0",
-    "gh-pages": "^3.2.3",
     "postcss": "^8.3.6",
     "react-scripts": "^4.0.3",
     "rollup": "^2.55.1",
