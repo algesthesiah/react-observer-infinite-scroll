@@ -1,0 +1,30 @@
+name: GitHub Actions Build and Deploy Demo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.13.0]
+    steps:
+      # 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+          node-version: ${{ matrix.node-version }}
+      # 安装依赖、打包
+      - name: Install and Build
+        run: |
+          yarn install
+          yarn build:web
+          yarn storybook:upload
+      # # 部署到 GitHub Pages      - name: Deploy
+      #   uses: JamesIves/github-pages-deploy-action@releases/v3
+      #   with:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      #     BRANCH: gh-pages
+      #     FOLDER: storybook-static
