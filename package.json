@@ -1,7 +1,7 @@
 {
-  "name": "ui",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-observer-infinite-scroll",
+  "version": "1.0.0",
+  "description": "An infinite scroll component for React",
   "scripts": {
     "start": "yarn storybook",
     "build": "rimraf es && rimraf lib && rollup -c",
@@ -10,6 +10,22 @@
   },
   "main": "./lib/index.js",
   "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algesthesiah/react-observer-infinite-scroll.git"
+  },
+  "homepage": "https://github.com/algesthesiah/react-observer-infinite-scroll",
   "dependencies": {
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",

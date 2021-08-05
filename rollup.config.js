@@ -1,18 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
 import resolve from '@rollup/plugin-node-resolve'; // 帮助寻找 node_modules 里的包
 import commonjs from '@rollup/plugin-commonjs'; // 将非 ES6 语法的包转为 ES6 可用
-import replace from 'rollup-plugin-replace'; // 替换待打包文件里的一些变量，如 process 在浏览器端是不存在的，需要被替换
+// import replace from 'rollup-plugin-replace'; // 替换待打包文件里的一些变量，如 process 在浏览器端是不存在的，需要被替换
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
-import alias from '@rollup/plugin-alias';
-import path from 'path';
+// import alias from '@rollup/plugin-alias';
+// import path from 'path';
 import typescript from 'rollup-plugin-typescript2';
 import packageJSON from './package.json';
 import babel from '@rollup/plugin-babel';
 
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 
-const env = process.env.NODE_ENV;
+// const env = process.env.NODE_ENV;
 const external = ['react', 'react-dom'];
 const config = [
   {
@@ -57,18 +57,18 @@ const config = [
           ],
         ],
       }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
+      // replace({
+      //   'process.env.NODE_ENV': JSON.stringify(env),
+      // }),
       sizeSnapshot(),
-      alias({
-        entries: [
-          {
-            find: '@',
-            replacement: path.join(__dirname, 'src'),
-          },
-        ],
-      }),
+      // alias({
+      //   entries: [
+      //     {
+      //       find: '@',
+      //       replacement: path.join(__dirname, 'src'),
+      //     },
+      //   ],
+      // }),
       terser(),
     ],
     onwarn: function (warning) {
