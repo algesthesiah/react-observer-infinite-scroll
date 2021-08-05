@@ -5,10 +5,10 @@
 # install
 
 ```bash
-npm install --save react-observer-scroll-component
+npm install --save react-observer-infinite-scroll
 
 // in code ES6
-import InfiniteScroll from 'react-observer-scroll-component';
+import InfiniteScroll from 'react-observer-infinite-scroll';
 ```
 
 # demos
