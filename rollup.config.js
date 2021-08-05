@@ -13,11 +13,11 @@ import babel from '@rollup/plugin-babel';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 
 const env = process.env.NODE_ENV;
-// const external = ['react', 'react-dom'];
+const external = ['react', 'react-dom'];
 const config = [
   {
     input: 'src/index.tsx',
-    // external: external, // 告诉 rollup，不打包将其视为外部依赖
+    external: external, // 告诉 rollup，不打包将其视为外部依赖
     output: [
       {
         file: packageJSON.main, // 通用模块
@@ -79,12 +79,7 @@ const config = [
         return;
       }
     },
-  },
-  // {
-  //   input: 'src/index.d.ts',
-  //   output: [{ file: 'build/index.d.ts', format: 'es' }],
-  //   plugins: [dts()],
-  // },
+  }
 ];
 
 export default config;

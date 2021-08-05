@@ -1,7 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
-// import InfiniteScroll, { InfiniteScrollOutRef } from './lib/index';
-// import { InfiniteScrollOutRef } from '../../build/index.d';
-import InfiniteScroll,{ InfiniteScrollOutRef } from '../index';
+import InfiniteScroll, { InfiniteScrollOutRef } from './lib/index';
+// import InfiniteScroll,{ InfiniteScrollOutRef } from '../index';
 
 export const ScrolleableTop = () => {
   const targetRef = useRef<InfiniteScrollOutRef>(null);
