@@ -32,7 +32,7 @@ jobs:
         run: |
           git config --global user.email "541877028@qq.com"
           git config --global user.name "Joey Leo"
-          git remote set-url origin https://${secrets.GITHUB_TOKEN}@github.com/algesthesiah/react-observer-infinite-scroll.git
+          git remote set-url origin https://${secrets.WEB_PAGE}@github.com/algesthesiah/react-observer-infinite-scroll.git
           yarn install
           yarn build:web
       - name: Setup GitHub
