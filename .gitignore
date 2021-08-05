@@ -25,4 +25,4 @@ storybook-static
 public
 lib
 es
-.size-snapshot
+.size-snapshot.json
