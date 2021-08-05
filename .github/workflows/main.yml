@@ -27,6 +27,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           persist-credentials: false
+          ref: ${{ github.head_ref }}
           token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Setup
         uses: fregante/setup-git-user@v1
