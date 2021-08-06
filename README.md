@@ -15,6 +15,8 @@ import InfiniteScroll from 'react-observer-infinite-scroll';
 
 ## ScrolleableTop
 
+类似聊天查看历史记录倒序无限加载
+
 ```jsx
 import { useCreation } from 'ahooks';
 import React, { RefObject } from 'react';
@@ -75,6 +77,8 @@ export default ScrolleableTop;
 
 ## WindowInfiniteScrollComponent
 
+常用的基于 全局 `Windows` 的无限下拉
+
 ``` jsx
 import React from 'react';
 import InfiniteScroll from '../index';
@@ -130,5 +134,4 @@ name | type | description
 **style** | object | 容器样式表
 **intersectionOption** | object | IntersectionObserver 参数
 **inverse** | boolean | 是否倒序
-**immediate** | boolean | 是否初始化就执行 next 回调
 **dataLength** | number | 滚动列表核心数据的数值
