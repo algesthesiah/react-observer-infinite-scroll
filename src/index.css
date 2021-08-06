@@ -5,10 +5,6 @@
 .react-infinite-scroll-wrap {
   position: relative;
 }
-.inverse-fake {
-  height: 10px;
-  margin-top: -10px;
-}
 .inverse-view {
   position: absolute;
   bottom: 0;
