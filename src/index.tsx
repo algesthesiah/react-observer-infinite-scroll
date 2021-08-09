@@ -52,6 +52,23 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
     const inverseViewRef = useRef<HTMLDivElement>(null);
 
     const intersection = useIntersection(intersectionRef, _intersectionOption);
+
+    useUpdateEffect(() => {
+      if (intersection?.time) {
+        if (stateRef.current.initTime === 0) {
+          stateRef.current.initTime = intersection?.time;
+        }
+      }
+    }, [stateRef, intersection]);
+
+    const oldDataLength = usePrevious(dataLength);
+    useUpdateEffect(() => {
+      if (dataLength === 0 && oldDataLength === 0 && intersection?.time) {
+        stateRef.current.initTime = 0;
+        setLoadingShow(true);
+      }
+    }, [dataLength === 0, oldDataLength === 0, stateRef, intersection]);
+
     const isIntoVIew = useMemo(
       () =>
         intersection &&
@@ -86,29 +103,12 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
       }
     }, [isIntoVIew, hasMore]);
 
-    const oldDataLength = usePrevious(dataLength);
-
-    useUpdateEffect(() => {
-      if (dataLength === 0 && oldDataLength !== 0 && intersection?.time) {
-        stateRef.current.initTime = intersection?.time;
-      }
-    }, [dataLength, oldDataLength, stateRef, intersection]);
-
-
     useUpdateEffect(() => {
       // 结束场景、过度场景
       if ((oldDataLength === dataLength && !hasMore) || (hasMore && dataLength !== oldDataLength)) {
         setLoadingShow(false);
       }
     }, [oldDataLength, dataLength, hasMore]);
-
-    useUpdateEffect(() => {
-      if (intersection?.time) {
-        if (stateRef.current.initTime === 0) {
-          stateRef.current.initTime = intersection?.time;
-        }
-      }
-    }, [stateRef, intersection]);
 
     return (
       <div className={inverse ? 'react-infinite-scroll-wrap inverse' : 'react-infinite-scroll-wrap'} style={style}>
