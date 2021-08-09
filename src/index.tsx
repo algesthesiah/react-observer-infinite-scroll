@@ -81,19 +81,19 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
 
     useUpdateEffect(() => {
       if (isIntoVIew && hasMore) {
-        setLoadingShow(true);
+        !loadingShow && setLoadingShow(true);
         next();
       }
-    }, [isIntoVIew, hasMore]);
+    }, [isIntoVIew, hasMore, loadingShow]);
 
     const oldDataLength = usePrevious(dataLength);
 
     useUpdateEffect(() => {
       // 结束场景、过度场景
-      if ((oldDataLength === dataLength && !hasMore) || (hasMore && dataLength != oldDataLength)) {
-        setLoadingShow(false);
+      if ((oldDataLength === dataLength && !hasMore) || (hasMore && dataLength !== oldDataLength)) {
+        loadingShow && setLoadingShow(false);
       }
-    }, [oldDataLength, dataLength, hasMore]);
+    }, [oldDataLength, dataLength, hasMore, loadingShow]);
 
     useUpdateEffect(() => {
       if (intersection?.time) {
