@@ -83,7 +83,7 @@ export default ScrolleableTop;
 常用的基于 全局 `Windows` 的无限下拉
 
 ``` jsx
-import React from 'react';
+import { useState } from 'react';
 import InfiniteScroll from 'react-observer-infinite-scroll';
 
 const WindowInfiniteScrollComponent = () => {
