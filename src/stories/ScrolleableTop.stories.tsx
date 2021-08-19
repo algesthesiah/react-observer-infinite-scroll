@@ -1,14 +1,17 @@
 import React, { useRef, useState, useCallback } from 'react';
-import InfiniteScroll,{ InfiniteScrollOutRef } from '../index';
+import InfiniteScroll, { InfiniteScrollOutRef } from '../index';
 
 export const ScrolleableTop = () => {
   const targetRef = useRef<InfiniteScrollOutRef>(null);
   const targetWrapRef = useRef(null);
   const [list, setList] = useState(Array.from({ length: 20 }));
+  const [loading, setLoading] = useState(false);
 
   const next = useCallback(() => {
+    setLoading(true);
     setTimeout(() => {
       setList(pre => pre.concat(Array.from({ length: 20 })));
+      setLoading(false);
     }, 2000);
   }, []);
 
@@ -42,6 +45,7 @@ export const ScrolleableTop = () => {
         dataLength={list.length}
         inverse
         next={next}
+        loading={loading}
         hasMore={true}
         ref={targetRef}
         loader={<h4>Loading...</h4>}>

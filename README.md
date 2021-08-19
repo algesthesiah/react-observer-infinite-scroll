@@ -114,6 +114,7 @@ export default WindowInfiniteScrollComponent;
 | name                   | type        | description               |
 | ---------------------- | ----------- | ------------------------- |
 | **next**               | function    | 触发滚动的回调函数        |
+| **loading**            | boolean     | 控制内部 loading 显示状态 |
 | **hasMore**            | boolean     | 是否可以加载更多          |
 | **children**           | node (list) | 滚动列表子级元素          |
 | **loader**             | node        | 加载动画元素              |

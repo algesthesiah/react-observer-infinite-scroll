@@ -5,7 +5,6 @@ import React, {
   CSSProperties,
   useRef,
   useMemo,
-  useState,
   ForwardRefExoticComponent,
   memo,
 } from 'react';
@@ -34,10 +33,11 @@ export interface InfiniteScrollProps {
   loader: ReactNode;
   inverse?: boolean;
   dataLength: number;
+  loading: boolean;
   intersectionOption?: IntersectionObserverInit;
 }
 const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
-  forwardRef(({ children, next, style, hasMore, loader, dataLength, inverse, intersectionOption }, ref) => {
+  forwardRef(({ children, next, style, hasMore, loader, dataLength, inverse, intersectionOption,loading }, ref) => {
     const _intersectionOption = {
       ...getDefaultIntersectionOption(inverse),
       ...intersectionOption,
@@ -46,7 +46,6 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
       // 可能一开始就进入了视口，需要过滤这种情况
       initTime: 0,
     });
-    const [loadingShow, setLoadingShow] = useState(true);
 
     const intersectionRef = useRef<HTMLDivElement>(null);
     const inverseViewRef = useRef<HTMLDivElement>(null);
@@ -65,7 +64,6 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
     useUpdateEffect(() => {
       if (dataLength === 0 && oldDataLength === 0 && intersection?.time) {
         stateRef.current.initTime = 0;
-        setLoadingShow(true);
       }
     }, [dataLength === 0, oldDataLength === 0, stateRef, intersection]);
 
@@ -98,24 +96,16 @@ const InfiniteScroll: ForwardRefExoticComponent<InfiniteScrollProps> = memo(
 
     useUpdateEffect(() => {
       if (isIntoVIew && hasMore) {
-        setLoadingShow(true);
         next();
       }
     }, [isIntoVIew, hasMore]);
-
-    useUpdateEffect(() => {
-      // 结束场景、过度场景
-      if ((oldDataLength === dataLength && !hasMore) || (hasMore && dataLength !== oldDataLength)) {
-        setLoadingShow(false);
-      }
-    }, [oldDataLength, dataLength, hasMore]);
 
     return (
       <div className={inverse ? 'react-infinite-scroll-wrap inverse' : 'react-infinite-scroll-wrap'} style={style}>
         {inverse && <div ref={inverseViewRef} className="inverse-view"></div>}
         {children}
         <div ref={intersectionRef}></div>
-        {loadingShow && hasMore && (loader || 'loading...')}
+        {loading && hasMore && (loader || 'loading...')}
       </div>
     );
   })
