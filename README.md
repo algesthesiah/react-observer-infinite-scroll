@@ -25,10 +25,13 @@ const ScrolleableTop = () => {
   const targetRef = useRef<InfiniteScrollOutRef>(null);
   const targetWrapRef = useRef(null);
   const [list, setList] = useState(Array.from({ length: 20 }));
+  const [loading, setLoading] = useState(false);
 
   const next = useCallback(() => {
+    setLoading(true);
     setTimeout(() => {
       setList(pre => pre.concat(Array.from({ length: 20 })));
+      setLoading(false);
     }, 2000);
   }, []);
 
@@ -62,6 +65,7 @@ const ScrolleableTop = () => {
         dataLength={list.length}
         inverse
         next={next}
+        loading={loading}
         hasMore={true}
         ref={targetRef}
         loader={<h4>Loading...</h4>}>
@@ -87,23 +91,31 @@ import { useState } from 'react';
 import InfiniteScroll from 'react-observer-infinite-scroll';
 
 const WindowInfiniteScrollComponent = () => {
-    const [data, setData] = useState(Array.from({ length: 20 }));
-    const next = () => {
-        setTimeout(() => {
-            setData(pre => pre.concat(Array.from({ length: 20 })));
-        }, 2000);
-    };
-    return (
-        <>
-            <InfiniteScroll hasMore={true} next={next} loader={<h1>Loading...</h1>} dataLength={data.length}>
-                {data.map((_, i) => (
-                    <div key={i} style={{ height: 30, margin: 4, border: '1px solid hotpink' }}>
-                        #{i + 1} row
-                    </div>
-                ))}
-            </InfiniteScroll>
-        </>
-    );
+  const [data, setData] = useState(Array.from({ length: 20 }));
+  const [loading, setLoading] = useState(false);
+  const next = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setData(pre => pre.concat(Array.from({ length: 20 })));
+      setLoading(false);
+    }, 2000);
+  };
+  return (
+    <>
+      <InfiniteScroll
+        loading={loading}
+        hasMore={true}
+        next={next}
+        loader={<h1>Loading...</h1>}
+        dataLength={data.length}>
+        {data.map((_, i) => (
+          <div key={i} style={{ height: 30, margin: 4, border: '1px solid hotpink' }}>
+            #{i + 1} row
+          </div>
+        ))}
+      </InfiniteScroll>
+    </>
+  );
 };
 
 export default WindowInfiniteScrollComponent;
